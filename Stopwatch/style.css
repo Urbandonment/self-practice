@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+div {
+  background-color: rgb(70, 199, 119);
+  margin: auto;
+  padding: 30px;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  width: 30%;
+}
+
+#timer {
+  font-size: 50px;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px;
+  margin: 20px;
+  background-color: silver;
+  border-radius: 10px;
+  border-style: solid;
+  box-shadow: 10px;
+  transition-duration: 0.2s;
+}
+
+button:hover {
+  background-color: rgb(255, 119, 41);
+  color: white;
+}
