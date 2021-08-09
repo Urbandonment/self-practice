@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+div {
+  background-color: rgb(70, 199, 119);
+  margin: auto;
+  padding: 30px;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  width: 30%;
+}
+
+#clock {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 80px;
+}
