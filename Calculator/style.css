@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+div {
+  background-color: rgb(70, 199, 119);
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+  border-style: solid;
+  border-width: 2px;
+  width: 50%;
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+}
+
+.display {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  width: 600px;
+  text-align: right;
+}
+
+.operators {
+  margin: auto;
+  border-style: none;
+}
+
+.operators button {
+  width: 50px;
+  background-color: rgb(247, 140, 78);
+  border-radius: 10%;
+  cursor: pointer;
+}
+
+.keys {
+  margin: auto;
+  border-style: none;
+  overflow: hidden;
+}
+
+.row {
+  float: left;
+  margin: auto;
+  border-style: none;
+}
+
+.row button {
+  width: 50px;
+  padding: 0px;
+  cursor: pointer;
+  background-color: rgb(201, 196, 196);
+}
+
+.equal {
+  border-style: none;
+}
+
+.equal button {
+  width: 50px;
+  padding: 0px;
+  cursor: pointer;
+  background-color: rgb(91, 178, 248);
+}
