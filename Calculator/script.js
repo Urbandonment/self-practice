@@ -2,6 +2,7 @@
 let preOutput = document.getElementById('preValue');
 let newOutput = document.getElementById('newValue');
 let number = document.getElementsByClassName('number');
+let operator = document.getElementsByClassName('operator');
 
 // Convert from Number to String to display decimal place
 const formatNum = function (num) {
@@ -21,15 +22,36 @@ const printPreOutput = function (num) {
 
 // Display the current operand
 const printNewOutput = function (num) {
-  newOutput.innerText = num;
+  if (num == '') {
+    newOutput.innerText = num;
+  } else {
+    newOutput.innerText = revertFormatNum(num);
+  }
 };
 
-// Handle click action on number keys
+// Handle numbers button
 for (let i = 0; i < number.length; i++) {
   number[i].addEventListener('click', function () {
-    let result = revertFormatNum(newOutput);
+    let result = revertFormatNum(newOutput.innerText);
     if (result != NaN) {
-      result += this.id;
+      result = result + this.id;
+      printNewOutput(result);
+    }
+  });
+}
+
+// Handle operators button
+for (let i = 0; i < operator.length; i++) {
+  operator[i].addEventListener('click', function () {
+    let result = revertFormatNum(newOutput.innerText);
+    // Clear button (AC)
+    if (this.id == 'clear') {
+      newOutput.innerText = '';
+    }
+    // Delete button (DEL)
+    if (this.id == 'delete') {
+      let deleteNum = new String(result).slice(0, -1);
+      result = revertFormatNum(deleteNum);
       printNewOutput(result);
     }
   });
