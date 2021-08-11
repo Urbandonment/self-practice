@@ -39,13 +39,13 @@ for (let i = 0; i < number.length; i++) {
       result = result + this.id;
       printNewOutput(result);
     }
-    // if (isFinalResult) {
-    //   isFinalResult = false;
-    //   printPreOutput('');
-    //   result = '';
-    //   result = result + this.id;
-    //   printNewOutput(result);
-    // }
+    if (isFinalResult) {
+      printPreOutput('');
+      result = '';
+      result = result + this.id;
+      printNewOutput(result);
+      isFinalResult = false;
+    }
   });
 }
 
@@ -72,12 +72,12 @@ for (let i = 0; i < operator.length; i++) {
     // Operators button
     else {
       if (result != '') {
+        isFinalResult = false;
         preResult = preResult + result;
         printPreOutput(preResult);
         if (this.id == '=') {
           finalResult = eval(preResult);
           printNewOutput(finalResult);
-          printPreOutput(preResult + this.id);
           printPreOutput('');
           isFinalResult = true;
         } else {
