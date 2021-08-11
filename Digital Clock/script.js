@@ -10,8 +10,12 @@ const showClock = function () {
   let meridiem = 'AM';
 
   if (hr >= 12) {
-    hr = hr - 12;
-    meridiem = 'PM';
+    if (hr != 12) {
+      hr = hr - 12;
+      meridiem = 'PM';
+    } else {
+      meridiem = 'PM';
+    }
   }
 
   if (hr < 10) {

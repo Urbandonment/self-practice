@@ -36,13 +36,18 @@ for (let i = 0; i < number.length; i++) {
   number[i].addEventListener('click', function () {
     let result = revertFormatNum(newOutput.innerText);
     if (result != NaN) {
-      result = result + this.id;
+      result += this.id;
       printNewOutput(result);
+      if (result.length >= 22) {
+        alert('Maximum capacity reached !');
+        result = result.toString().substr(0, 21);
+        printNewOutput(result);
+      }
     }
     if (isFinalResult) {
       printPreOutput('');
       result = '';
-      result = result + this.id;
+      result += this.id;
       printNewOutput(result);
       isFinalResult = false;
     }
@@ -73,7 +78,7 @@ for (let i = 0; i < operator.length; i++) {
     else {
       if (result != '') {
         isFinalResult = false;
-        preResult = preResult + result;
+        preResult += result;
         printPreOutput(preResult);
         if (this.id == '=') {
           finalResult = eval(preResult);
@@ -81,7 +86,7 @@ for (let i = 0; i < operator.length; i++) {
           printPreOutput('');
           isFinalResult = true;
         } else {
-          preResult = preResult + this.id;
+          preResult += this.id;
           printPreOutput(preResult);
           printNewOutput('');
         }
