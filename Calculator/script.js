@@ -2,11 +2,13 @@
 let preOutput = document.getElementById('preValue');
 let newOutput = document.getElementById('newValue');
 let number = document.getElementsByClassName('number');
+let decimal = document.getElementsByClassName('decimal');
 let operator = document.getElementsByClassName('operator');
 let isFinalResult = false;
+let isNegate = false;
 
 newOutput.innerText = '0';
-// Convert from Number to String to display decimal place
+// Convert from Number to String to display comma
 const formatNum = function (num) {
   return Number(num).toLocaleString('en');
 };
@@ -34,15 +36,14 @@ const printNewOutput = function (num) {
 // Handle numbers button
 for (let i = 0; i < number.length; i++) {
   number[i].addEventListener('click', function () {
+    console.log(this.id, typeof this.id);
     let result = revertFormatNum(newOutput.innerText);
-    if (result != NaN) {
-      result += this.id;
+    result += this.id;
+    printNewOutput(result);
+    if (result.length >= 22) {
+      alert('Maximum input reached !');
+      result = result.toString().substr(0, 21);
       printNewOutput(result);
-      if (result.length >= 22) {
-        alert('Maximum capacity reached !');
-        result = result.toString().substr(0, 21);
-        printNewOutput(result);
-      }
     }
     if (isFinalResult) {
       printPreOutput('');
@@ -53,6 +54,15 @@ for (let i = 0; i < number.length; i++) {
     }
   });
 }
+
+// Handle decimal button
+// for (let i = 0; i < decimal.length; i++) {
+//   decimal[i].addEventListener('click', function () {
+//     let result = newOutput.innerText;
+//     result += this.id;
+//     printNewOutput(result);
+//   });
+// }
 
 // Handle operators button
 for (let i = 0; i < operator.length; i++) {
@@ -72,6 +82,14 @@ for (let i = 0; i < operator.length; i++) {
         let deleteNum = new String(result).slice(0, -1);
         result = revertFormatNum(deleteNum);
         printNewOutput(result);
+      }
+    }
+    // Negate button (+/-)
+    else if (this.id == 'negate') {
+      if (!isNegate) {
+        result = '-' + result;
+        printNewOutput(result);
+        isNegate = true;
       }
     }
     // Operators button
