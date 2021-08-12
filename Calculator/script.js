@@ -1,50 +1,67 @@
-'use strict';
+// 'use strict';
 let preOutput = document.getElementById('preValue');
 let newOutput = document.getElementById('newValue');
 let number = document.getElementsByClassName('number');
-let decimal = document.getElementsByClassName('decimal');
 let operator = document.getElementsByClassName('operator');
+let negate = document.getElementById('negate');
 let isFinalResult = false;
 let isNegate = false;
-
+let decimalAllowed = true;
 newOutput.innerText = '0';
-// Convert from Number to String to display comma
-const formatNum = function (num) {
-  return Number(num).toLocaleString('en');
+
+// -- Remove the leading zero
+const removeZero = function (num) {
+  return String(num).replace(/^0+/, '');
 };
 
-// Revert the format number back to Number
-const revertFormatNum = function (num) {
-  let revertNum = String(num).replace(/,/g, '');
-  return Number(revertNum);
-};
+// // -- Add the thousand separators
+// const thousand = function (num) {
+//   const pattern = /(\d)(?=(\d{3})+(?!\d))/g;
+//   const repl = '$1,';
+//   const string = String(num);
+//   return string.replace(pattern, repl);
+// };
 
-// Display the operand and previous result
+// -- Display the operand and previous result
 const printPreOutput = function (num) {
   preOutput.innerText = num;
 };
 
-// Display the current input and result
+// -- Display the current input and result
 const printNewOutput = function (num) {
-  if (num == '') {
-    newOutput.innerText = num;
+  newOutput.innerText = num;
+};
+
+// -- Check whether negative is enabled
+const checkNegate = function (num) {
+  if (String(num).charAt(0) == '-') {
+    isNegate = true;
   } else {
-    newOutput.innerText = formatNum(num);
+    isNegate = false;
   }
 };
 
-// Handle numbers button
+// -- Handle numbers button
 for (let i = 0; i < number.length; i++) {
   number[i].addEventListener('click', function () {
-    console.log(this.id, typeof this.id);
-    let result = revertFormatNum(newOutput.innerText);
+    let result = removeZero(newOutput.innerText);
     result += this.id;
     printNewOutput(result);
+    // -- Alert if reach maximum input
     if (result.length >= 22) {
       alert('Maximum input reached !');
       result = result.toString().substr(0, 21);
       printNewOutput(result);
     }
+    // -- Decimal button (.)
+    if (this.id == '.') {
+      if (decimalAllowed) {
+        result += this.id;
+        decimalAllowed = false;
+      } else {
+      }
+    }
+    checkNegate(result);
     if (isFinalResult) {
       printPreOutput('');
       result = '';
@@ -55,44 +72,47 @@ for (let i = 0; i < number.length; i++) {
   });
 }
 
-// Handle decimal button
-// for (let i = 0; i < decimal.length; i++) {
-//   decimal[i].addEventListener('click', function () {
-//     let result = newOutput.innerText;
-//     result += this.id;
-//     printNewOutput(result);
-//   });
-// }
-
-// Handle operators button
+// -- Handle operators button
 for (let i = 0; i < operator.length; i++) {
   operator[i].addEventListener('click', function () {
-    let result = revertFormatNum(newOutput.innerText);
+    let result = newOutput.innerText;
     let preResult = preOutput.innerText;
     let finalResult;
-    // Clear button (AC)
+    checkNegate(result);
+    // -- Clear button (AC)
     if (this.id == 'clear') {
       isFinalResult = false;
+      isNegate = false;
+      decimalAllowed = true;
       newOutput.innerText = '0';
       preOutput.innerText = '';
     }
-    // Delete button (DEL)
+    // -- Delete button (DEL)
     else if (this.id == 'delete') {
+      let deleteNum;
       if (!isFinalResult) {
-        let deleteNum = new String(result).slice(0, -1);
-        result = revertFormatNum(deleteNum);
+        if (isNegate) {
+          deleteNum = new String(result).slice(1, -1);
+        } else {
+          deleteNum = new String(result).slice(0, -1);
+        }
+        result = deleteNum;
         printNewOutput(result);
       }
     }
-    // Negate button (+/-)
+    // -- Negate button (+/-)
     else if (this.id == 'negate') {
       if (!isNegate) {
         result = '-' + result;
         printNewOutput(result);
         isNegate = true;
+      } else {
+        result = String(result).slice(1);
+        printNewOutput(result);
+        isNegate = false;
       }
     }
-    // Operators button
+    // -- Operators button
     else {
       if (result != '') {
         isFinalResult = false;
