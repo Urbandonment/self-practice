@@ -4,6 +4,8 @@ let newOutput = document.getElementById('newValue');
 let number = document.getElementsByClassName('number');
 let operator = document.getElementsByClassName('operator');
 let negate = document.getElementById('negate');
+let finalResult = '';
+let ansNum = '';
 let isFinalResult = false;
 let isNegate = false;
 let decimalAllowed = true;
@@ -70,7 +72,6 @@ for (let i = 0; i < operator.length; i++) {
   operator[i].addEventListener('click', function () {
     let result = newOutput.innerText;
     let preResult = preOutput.innerText;
-    let finalResult;
     checkNegate(result);
     // -- Clear button (AC)
     if (this.id == 'clear') {
