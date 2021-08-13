@@ -15,7 +15,7 @@ const removeZero = function (num) {
 };
 
 // // -- Add the thousand separators
-// const thousand = function (num) {
+// const thousandSep = function (num) {
 //   const pattern = /(\d)(?=(\d{3})+(?!\d))/g;
 //   const repl = '$1,';
 //   const string = String(num);
@@ -47,22 +47,15 @@ for (let i = 0; i < number.length; i++) {
     let result = removeZero(newOutput.innerText);
     result += this.id;
     printNewOutput(result);
-    // -- Alert if reach maximum input
+    // -- Alert if reached maximum input
     if (result.length >= 22) {
       alert('Maximum input reached !');
       result = result.toString().substr(0, 21);
       printNewOutput(result);
     }
-    // -- Decimal button (.)
-    if (this.id == '.') {
-      if (decimalAllowed) {
-        result += this.id;
-        decimalAllowed = false;
-      } else {
-      }
-    }
     checkNegate(result);
     if (isFinalResult) {
+      decimalAllowed = true;
       printPreOutput('');
       result = '';
       result += this.id;
@@ -90,6 +83,11 @@ for (let i = 0; i < operator.length; i++) {
     // -- Delete button (DEL)
     else if (this.id == 'delete') {
       let deleteNum;
+      if (result.endsWith('.')) {
+        decimalAllowed = true;
+      } else {
+        decimalAllowed = false;
+      }
       if (!isFinalResult) {
         if (isNegate) {
           deleteNum = new String(result).slice(1, -1);
@@ -98,6 +96,7 @@ for (let i = 0; i < operator.length; i++) {
         }
         result = deleteNum;
         printNewOutput(result);
+        decimalAllowed = true;
       }
     }
     // -- Negate button (+/-)
@@ -112,6 +111,16 @@ for (let i = 0; i < operator.length; i++) {
         isNegate = false;
       }
     }
+    // -- Decimal button (.)
+    else if (this.id == '.') {
+      if (decimalAllowed) {
+        result += this.id;
+        printNewOutput(result);
+        decimalAllowed = false;
+      }
+      if (result.startsWith('0')) {
+      }
+    }
     // -- Operators button
     else {
       if (result != '') {
@@ -119,11 +128,16 @@ for (let i = 0; i < operator.length; i++) {
         preResult += result;
         printPreOutput(preResult);
         if (this.id == '=') {
-          finalResult = eval(preResult);
+          if (preResult.includes('.')) {
+            finalResult = eval(preResult).toFixed(1);
+          } else {
+            finalResult = eval(preResult);
+          }
           printNewOutput(finalResult);
           printPreOutput('');
           isFinalResult = true;
         } else {
+          decimalAllowed = true;
           preResult += this.id;
           printPreOutput(preResult);
           printNewOutput('');
